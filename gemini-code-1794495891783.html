@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتب صنعاء للإحالات الطبية | المنظومة المتكاملة</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+
+    <!-- Top Bar / Header -->
+    <header class="bg-slate-900 text-white shadow-xl border-b border-slate-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-blue-600 text-white p-3 rounded-xl shadow-md font-black text-2xl">
+                    <i class="fa-solid fa-notes-medical"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-xl font-black tracking-wide">مكتب صنعاء للإحالات الطبية</h1>
+                    <p class="text-[11px] text-slate-400">نظام إدارة التنسيق الميداني والإحالات الإسعافية والتخصصية</p>
+                </div>
+            </div>
+            
+            <!-- Navigation Links -->
+            <nav class="flex flex-wrap items-center justify-center gap-2 text-xs md:text-sm">
+                <button onclick="switchTab('home')" id="btn-home" class="nav-btn px-3.5 py-2 bg-blue-600 text-white rounded-lg transition font-bold shadow-sm">الرئيسية</button>
+                <button onclick="switchTab('new-referral')" id="btn-new-referral" class="nav-btn px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition font-semibold">إحالة مريض جديد</button>
+                <button onclick="switchTab('receiving-portal')" id="btn-receiving-portal" class="nav-btn px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition font-semibold">بوابة المستشفيات</button>
+                <button onclick="switchTab('tracking-portal')" id="btn-tracking-portal" class="nav-btn px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition font-semibold">تتبع الحالات</button>
+                <button onclick="checkAdminAccess()" class="nav-btn px-3.5 py-2 bg-amber-600 hover:bg-amber-500 text-slate-950 rounded-lg transition font-bold"><i class="fa-solid fa-lock ml-1"></i> لوحة الأدمن</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container mx-auto px-4 py-8 flex-grow space-y-8">
+
+        <!-- 1. HOME TAB -->
+        <div id="home" class="tab-content space-y-8">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white rounded-3xl p-6 md:p-10 shadow-xl border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="md:w-2/3 space-y-4 text-center md:text-right">
+                    <span class="bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs px-3.5 py-1 rounded-full font-bold">منظومة تنسيق معتمدة</span>
+                    <h2 class="text-2xl md:text-4xl font-black leading-tight">سرعة التنسيق.. أمان المريض.. دقة التحويل</h2>
+                    <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                        نربط المستشفيات والمراكز الريفية في كافة المحافظات بشبكة واسعة من المستشفيات التخصصية، العيادات، ومراكز الأشعة في العاصمة صنعاء، مع نظام تتبّع لحظي ومحفوظات دقيقة.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-3 justify-center md:justify-start">
+                        <button onclick="switchTab('new-referral')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg transition text-xs md:text-sm">
+                            <i class="fa-solid fa-plus-circle ml-2"></i> إرسال حالة جديدة
+                        </button>
+                        <button onclick="switchTab('receiving-portal')" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold px-6 py-3 rounded-xl transition text-xs md:text-sm">
+                            <i class="fa-solid fa-hospital ml-2"></i> استعراض المستشفيات المستقبلة
+                        </button>
+                    </div>
+                </div>
+                <div class="md:w-1/3 flex justify-center w-full">
+                    <div class="bg-slate-800/90 p-6 rounded-2xl backdrop-blur-md border border-slate-700 text-center shadow-inner w-full max-w-xs">
+                        <i class="fa-solid fa-ambulance text-4xl text-amber-400 mb-2 animate-pulse"></i>
+                        <h3 class="font-bold text-white text-sm">خط ساخن للطوارئ</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">تنسيق النقل والإسعاف 24 ساعة</p>
+                        <p class="text-lg font-black text-amber-300 mt-2 tracking-wider" dir="ltr">700090113</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Service Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-500 transition group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold group-hover:bg-blue-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-file-medical-alt"></i>
+                        </div>
+                        <h3 class="font-bold text-base mb-2 text-slate-900">إحالة مريض جديد</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            بوابة مخصصة للمستشفيات الريفية والمراكز الصحية لإدخال بيانات المريض، التشخيص، ودرجة الوعي GCS وتحديد المستشفى المستقبل.
+                        </p>
+                    </div>
+                    <button onclick="switchTab('new-referral')" class="mt-4 text-blue-600 hover:text-blue-800 text-xs font-bold flex items-center gap-1">
+                        ابدأ الإحالة الآن <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-500 transition group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold group-hover:bg-emerald-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-hospital-user"></i>
+                        </div>
+                        <h3 class="font-bold text-base mb-2 text-slate-900">بوابة المستشفيات والمراكز</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            خاصة بالمستشفيات التخصصية، العيادات، ومركز صنعاء للأشعة لمراجعة الحالات الواردة، وتأكيد توفر الأسرّة واستلام المريض.
+                        </p>
+                    </div>
+                    <button onclick="switchTab('receiving-portal')" class="mt-4 text-emerald-600 hover:text-emerald-800 text-xs font-bold flex items-center gap-1">
+                        استعراض الشبكة <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-500 transition group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold group-hover:bg-amber-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-route"></i>
+                        </div>
+                        <h3 class="font-bold text-base mb-2 text-slate-900">تتبع لحظي للإحالات</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            نظام تتبّع بصري بثلاث مراحل (تم التحويل ➔ المريض في الطريق ➔ وصل وتأكيد الاستلام) لضمان الشفافية والمتابعة.
+                        </p>
+                    </div>
+                    <button onclick="switchTab('tracking-portal')" class="mt-4 text-amber-600 hover:text-amber-800 text-xs font-bold flex items-center gap-1">
+                        تتبع حالة مريض <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Additional Services Highlight -->
+            <div class="bg-emerald-900 text-white p-6 rounded-2xl shadow-md border border-emerald-800 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="space-y-1 text-center md:text-right">
+                    <span class="bg-emerald-500/30 text-emerald-200 text-[11px] px-3 py-0.5 rounded-full font-bold">خدمات استراتيجية إضافية</span>
+                    <h3 class="text-base md:text-lg font-bold mt-1">تزويد المستشفيات الريفية والمحافظات بالكوادر الطبية الماهرة</h3>
+                    <p class="text-emerald-100 text-xs">نوفر كوادر تمريضية وطبية تخصصية ذات كفاءة وخبرة عالية لدعم المنشآت الطبية في المديريات والمحافظات.</p>
+                </div>
+                <button onclick="switchTab('new-referral')" class="bg-white hover:bg-emerald-50 text-emerald-950 font-bold px-5 py-2.5 rounded-xl shadow transition text-xs whitespace-nowrap">طلب توريد كادر</button>
+            </div>
+
+            <!-- Public Summary Stats -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-base mb-4 text-slate-800 border-b pb-2"><i class="fa-solid fa-chart-pie ml-2 text-blue-600"></i>ملخص حركة الإحالات النشطة في النظام</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <p class="text-xs text-slate-500">إجمالي الإحالات</p>
+                        <p id="stat-total" class="text-2xl font-black text-slate-900 mt-1">0</p>
+                    </div>
+                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                        <p class="text-xs text-amber-800">قيد المراجعة والانتظار</p>
+                        <p id="stat-pending" class="text-2xl font-black text-amber-700 mt-1">0</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                        <p class="text-xs text-blue-800">جاري النقل بالطريق</p>
+                        <p id="stat-transit" class="text-2xl font-black text-blue-700 mt-1">0</p>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+                        <p class="text-xs text-emerald-800">مكتمل وتم الاستلام</p>
+                        <p id="stat-completed" class="text-2xl font-black text-emerald-700 mt-1">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. NEW REFERRAL TAB -->
+        <div id="new-referral" class="tab-content hidden max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200">
+            <div class="border-b border-slate-100 pb-4 mb-6">
+                <h2 class="text-xl md:text-2xl font-black text-slate-900"><i class="fa-solid fa-file-circle-plus ml-2 text-blue-600"></i>فورم إحالة مريض جديد</h2>
+                <p class="text-xs text-slate-500 mt-1">النموذج المعتمد للمستشفيات الريفية والمراكز والأطباء المحيلين</p>
+            </div>
+            
+            <form id="referralForm" onsubmit="submitReferral(event)" class="space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">اسم المريض الرباعي *</label>
+                        <input type="text" id="patientName" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-blue-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">العمر والجنس *</label>
+                        <div class="flex gap-2">
+                            <input type="number" id="patientAge" placeholder="العمر" required class="w-1/2 p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            <select id="patientGender" class="w-1/2 p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                                <option value="ذكر">ذكر</option>
+                                <option value="أنثى">أنثى</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">المستشفى أو المركز المُحيل (الريفي) *</label>
+                        <input type="text" id="referringHospital" placeholder="مثال: مستشفى قفل شمّر الريفي" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">جهة التحويل المستهدفة (في صنعاء) *</label>
+                        <select id="targetHospital" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                            <option value="المستشفى الاستشاري اليمني">المستشفى الاستشاري اليمني</option>
+                            <option value="مستشفى الثورة العام">مستشفى الثورة العام</option>
+                            <option value="المستشفى الجمهوري التعليمي">المستشفى الجمهوري التعليمي</option>
+                            <option value="مركز صنعاء للأشعة والتصوير التشخيصي">مركز صنعاء للأشعة والتصوير التشخيصي</option>
+                            <option value="عيادات التخصص الشامل">عيادات التخصص الشامل</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">التشخيص المبدئي (Diagnosis) *</label>
+                    <input type="text" id="patientDiagnosis" placeholder="مثال: جلطة دماغية حادة / نزيف داخلي / إصابة بالغة" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">نبذة عن الحالة الصحية ومقياس الوعي GCS والتدخلات الإسعافية *</label>
+                    <textarea id="patientCondition" rows="3" placeholder="العلامات الحيوية، درجة الوعي GCS، الأدوية والمحاليل التي أُعطيت..." required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">اسم الشخص/الطبيب المحيل ورقم هاتفه *</label>
+                        <input type="text" id="referrerContact" placeholder="الاسم ورقم الجوال" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm" dir="ltr">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">اسم المرافق الشخصي ورقم هاتفه *</label>
+                        <input type="text" id="companionContact" placeholder="الاسم ورقم الجوال" required class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm" dir="ltr">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-4 rounded-xl shadow-md transition text-base">
+                    <i class="fa-solid fa-paper-plane ml-2"></i> إرسال طلب الإحالة إلى غرفة التنسيق
+                </button>
+            </form>
+        </div>
+
+        <!-- 3. RECEIVING PORTAL TAB -->
+        <div id="receiving-portal" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-black text-slate-900"><i class="fa-solid fa-hospital-user ml-2 text-emerald-600"></i>بوابة المستشفيات والعيادات المستقبلة</h2>
+                    <p class="text-xs text-slate-500 mt-1">مخصص لاستلام الإحالات الواردة، مراجعة البيانات، وتأكيد توفر السرير واستلام الحالة.</p>
+                </div>
+                <div>
+                    <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs px-3 py-1.5 rounded-xl font-bold">شبكة معتمدة (مستشفيات وعيادات)</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-base mb-4 text-slate-800">الحالات الطبية الواردة لشبكة الاستقبال</h3>
+                <div id="receiving-list" class="space-y-4">
+                    <p class="text-xs text-slate-400 text-center py-6">لا توجد حالات واردة حالياً.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. TRACKING PORTAL TAB -->
+        <div id="tracking-portal" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-black text-slate-900 mb-1"><i class="fa-solid fa-route ml-2 text-blue-600"></i>نظام تتبع الإحالات اللحظي</h2>
+                <p class="text-xs text-slate-500 mb-6">متابعة خط سير الحالة عبر نقاط التتبع البصرية الثلاث المعتمدة في المنظومة.</p>
+                
+                <div id="tracking-container" class="space-y-6">
+                    <p class="text-xs text-slate-400 text-center py-6">لا توجد حالات مسجلة للتتبع حالياً.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. ADMIN DASHBOARD TAB (Secured) -->
+        <div id="admin-dashboard" class="tab-content hidden space-y-6">
+            <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-lg flex flex-col md:flex-row justify-between items-center gap-4 border border-slate-800">
+                <div>
+                    <span class="bg-amber-500 text-slate-950 text-xs px-2.5 py-1 rounded font-bold">صلاحيات الأدمن والمالية</span>
+                    <h2 class="text-2xl font-black mt-2">لوحة الإدارة والنسب المالية</h2>
+                    <p class="text-xs text-slate-400">مراقبة الإحالات، ضبط النسب والعمولات المتفق عليها مع المستشفيات.</p>
+                </div>
+                <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-500 text-white text-xs px-4 py-2 rounded-lg font-bold transition">خروج من لوحة الأدمن</button>
+            </div>
+
+            <!-- Financial & General KPIs (Admin Only) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-xs text-slate-500 font-bold">إجمالي الإيرادات المتوقعة (من نسب الإحالات)</p>
+                    <p id="admin-total-revenue" class="text-3xl font-black text-emerald-600 mt-2">35,000 ر.ي</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-xs text-slate-500 font-bold">المستشفيات والعيادات ومراكز الأشعة الشريكة</p>
+                    <p class="text-3xl font-black text-blue-600 mt-2">14 مركز</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-xs text-slate-500 font-bold">الكوادر الطبية الموزعة بالريف</p>
+                    <p class="text-3xl font-black text-amber-600 mt-2">28 كادر</p>
+                </div>
+            </div>
+
+            <!-- Full Admin Control Table -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-base mb-4 text-slate-800">إدارة ومراقبة وحذف السجلات في النظام</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-xs">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700">
+                                <th class="p-3">اسم المريض</th>
+                                <th class="p-3">المستشفى المُحيل</th>
+                                <th class="p-3">الوجهة المستهدفة</th>
+                                <th class="p-3">التشخيص</th>
+                                <th class="p-3">الحالة الراهنة</th>
+                                <th class="p-3">إجراءات تحكم الأدمن</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 mt-12 border-t border-slate-800 text-xs">
+        <div class="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h4 class="font-bold text-white text-sm mb-3">مكتب صنعاء للإحالات الطبية</h4>
+                <p class="leading-relaxed text-slate-400">
+                    منظومة التنسيق الإسعافي والتخصصي من الريف إلى العاصمة. نضمن سرعة التحويل، أمان المريض، وجودة الاعتماد بالشراكة مع نخبة المستشفيات والعيادات.
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold text-white text-sm mb-3">معلومات التواصل والدوام</h4>
+                <p class="mb-2"><i class="fa-solid fa-location-dot ml-2 text-amber-400"></i>العنوان: شارع الستين - مقابل المستشفى الاستشاري - صنعاء</p>
+                <p class="mb-2"><i class="fa-solid fa-envelope ml-2 text-amber-400"></i>البريد: h.alhakami1991@gmail.com</p>
+                <p class="mb-2"><i class="fa-solid fa-clock ml-2 text-amber-400"></i>الدوام: من 8 صباحاً إلى 8 مساءً (الخط الساخن 24 ساعة)</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-white text-sm mb-3">الدعم السريع والطوارئ</h4>
+                <p class="text-amber-300 font-black text-base mb-2" dir="ltr">700090113</p>
+                <p class="text-emerald-400 font-semibold"><i class="fa-solid fa-shield-halved ml-1"></i> نظام تنسيق وإحالات آمن ومشفر</p>
+            </div>
+        </div>
+        <div class="bg-slate-950 text-center py-4 text-slate-500 border-t border-slate-800/50">
+            جميع الحقوق المحفوظة © 2026 - منظومة مكتب صنعاء للإحالات الطبية والتنسيق الميداني.
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        let referrals = JSON.parse(localStorage.getItem('sanaa_referrals')) || [
+            {
+                id: 1,
+                patientName: "عبدالله صالح أحمد",
+                age: 45,
+                gender: "ذكر",
+                referringHospital: "مستشفى قفل شمّر الريفي",
+                targetHospital: "المستشفى الاستشاري اليمني",
+                diagnosis: "جلطة دماغية حادة (Acute Stroke)",
+                condition: "غيبوبة جزئية GCS 10/15، ضغط الدم مرتفع، تم تركيب قسطرة ومحلول ملحي.",
+                referrer: "د. محمد الحكيمي (777767903)",
+                companion: "صالح أحمد (770797023)",
+                status: "قيد المراجعة",
+                step: 1
+            },
+            {
+                id: 2,
+                patientName: "فاطمة محمد علي",
+                age: 32,
+                gender: "أنثى",
+                referringHospital: "المركز الصحي بمديرية بني مطر",
+                targetHospital: "مستشفى الثورة العام",
+                diagnosis: "نزيف داخلي إثر حادث مروري وتكسير بالحوض",
+                condition: "استقرار نسبي بالعلامات الحيوية، GCS 13/15، بحاجة ماسة لعناية جراحية.",
+                referrer: "ممرض/ أحمد الوادعي (712220425)",
+                companion: "علي محمد (711122334)",
+                status: "في الطريق",
+                step: 2
+            }
+        ];
+
+        function saveToStorage() {
+            localStorage.setItem('sanaa_referrals', JSON.stringify(referrals));
+            updateStats();
+            renderReceivingList();
+            renderTrackingList();
+            renderAdminTable();
+        }
+
+        function switchTab(tabId) {
+            if(tabId === 'admin-dashboard') {
+                checkAdminAccess();
+                return;
+            }
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-slate-800', 'text-slate-200');
+            });
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if(activeBtn) {
+                activeBtn.classList.remove('bg-slate-800', 'text-slate-200');
+                activeBtn.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function checkAdminAccess() {
+            let password = prompt("الرجاء إدخال رمز المرور الخاص بلوحة الأدمن والمالية:");
+            if (password === "admin123") {
+                document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                renderAdminTable();
+            } else if (password !== null) {
+                alert("كلمة المرور غير صحيحة!");
+            }
+        }
+
+        function logoutAdmin() {
+            switchTab('home');
+        }
+
+        function submitReferral(e) {
+            e.preventDefault();
+            const newRef = {
+                id: Date.now(),
+                patientName: document.getElementById('patientName').value,
+                age: document.getElementById('patientAge').value,
+                gender: document.getElementById('patientGender').value,
+                referringHospital: document.getElementById('referringHospital').value,
+                targetHospital: document.getElementById('targetHospital').value,
+                diagnosis: document.getElementById('patientDiagnosis').value,
+                condition: document.getElementById('patientCondition').value,
+                referrer: document.getElementById('referrerContact').value,
+                companion: document.getElementById('companionContact').value,
+                status: "قيد المراجعة",
+                step: 1
+            };
+
+            referrals.unshift(newRef);
+            saveToStorage();
+            alert("تم إرسال طلب الإحالة بنجاح إلى غرفة التنسيق بمكتب صنعاء للإحالات الطبية!");
+            document.getElementById('referralForm').reset();
+            switchTab('tracking-portal');
+        }
+
+        function updateStats() {
+            document.getElementById('stat-total').innerText = referrals.length;
+            document.getElementById('stat-pending').innerText = referrals.filter(r => r.step === 1).length;
+            document.getElementById('stat-transit').innerText = referrals.filter(r => r.step === 2).length;
+            document.getElementById('stat-completed').innerText = referrals.filter(r => r.step === 3).length;
+        }
+
+        function renderReceivingList() {
+            const container = document.getElementById('receiving-list');
+            if (referrals.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">لا توجد حالات واردة حالياً.</p>`;
+                return;
+            }
+
+            container.innerHTML = referrals.map(r => `
+                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-black text-slate-900 text-base">${r.patientName}</span>
+                            <span class="text-xs bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded font-bold">${r.gender} - ${r.age} سنة</span>
+                        </div>
+                        <p class="text-xs text-slate-700"><b>المُحيل:</b> ${r.referringHospital} ➔ <b>الوجهة:</b> ${r.targetHospital}</p>
+                        <p class="text-xs text-slate-700"><b>التشخيص:</b> <span class="text-red-700 font-bold">${r.diagnosis}</span></p>
+                        <p class="text-xs text-slate-600"><b>نبذة الحالة:</b> ${r.condition}</p>
+                        <p class="text-xs text-slate-500"><b>أرقام الاتصال:</b> المحيل (${r.referrer}) | المرافق (${r.companion})</p>
+                    </div>
+                    <div class="flex flex-col gap-2 w-full md:w-auto">
+                        <span class="text-xs text-center font-bold px-3 py-1 rounded-lg ${r.step === 1 ? 'bg-amber-100 text-amber-800' : r.step === 2 ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800'}">${r.status}</span>
+                        <button onclick="updateStep(${r.id}, 2)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-2 rounded-lg font-bold transition">تأكيد توفر السرير (في الطريق)</button>
+                        <button onclick="updateStep(${r.id}, 3)" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-3 py-2 rounded-lg font-bold transition">تأكيد استلام الحالة (مكتمل)</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderTrackingList() {
+            const container = document.getElementById('tracking-container');
+            if (referrals.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">لا توجد حالات مسجلة للتتبع حالياً.</p>`;
+                return;
+            }
+
+            container.innerHTML = referrals.map(r => `
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4 shadow-sm">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+                        <div>
+                            <h4 class="font-black text-slate-900 text-base">${r.patientName}</h4>
+                            <p class="text-xs text-slate-500">من: ${r.referringHospital} إلى: ${r.targetHospital}</p>
+                        </div>
+                        <span class="text-xs font-bold px-3 py-1 rounded-full ${r.step === 1 ? 'bg-amber-100 text-amber-800' : r.step === 2 ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800'}">${r.status}</span>
+                    </div>
+
+                    <!-- 3 Points Visual Tracking Indicator -->
+                    <div class="py-4 px-2">
+                        <div class="flex items-center justify-between relative max-w-lg mx-auto">
+                            <div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-slate-200 z-0"></div>
+                            
+                            <!-- Point 1 -->
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${r.step >= 1 ? 'bg-slate-900 text-white shadow-md' : 'bg-slate-200 text-slate-500'}">
+                                    <i class="fa-solid fa-file-waveform"></i>
+                                </div>
+                                <span class="text-[11px] font-bold mt-2 ${r.step >= 1 ? 'text-slate-900' : 'text-slate-400'}">1. تم التحويل</span>
+                            </div>
+
+                            <!-- Point 2 -->
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${r.step >= 2 ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-200 text-slate-500'}">
+                                    <i class="fa-solid fa-ambulance"></i>
+                                </div>
+                                <span class="text-[11px] font-bold mt-2 ${r.step >= 2 ? 'text-blue-600' : 'text-slate-400'}">2. المريض في الطريق</span>
+                            </div>
+
+                            <!-- Point 3 -->
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${r.step >= 3 ? 'bg-emerald-600 text-white shadow-md' : 'bg-slate-200 text-slate-500'}">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <span class="text-[11px] font-bold mt-2 ${r.step >= 3 ? 'text-emerald-600' : 'text-slate-400'}">3. وصل وتأكيد الاستلام</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('admin-table-body');
+            tbody.innerHTML = referrals.map(r => `
+                <tr class="border-b border-slate-100 hover:bg-slate-50">
+                    <td class="p-3 font-bold text-slate-900">${r.patientName}</td>
+                    <td class="p-3">${r.referringHospital}</td>
+                    <td class="p-3">${r.targetHospital}</td>
+                    <td class="p-3">${r.diagnosis}</td>
+                    <td class="p-3">
+                        <span class="px-2.5 py-1 rounded font-bold text-xs ${r.step === 1 ? 'bg-amber-100 text-amber-800' : r.step === 2 ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800'}">${r.status}</span>
+                    </td>
+                    <td class="p-3 flex gap-2">
+                        <button onclick="deleteReferral(${r.id})" class="bg-red-50 hover:bg-red-100 text-red-700 px-2.5 py-1 rounded font-bold text-xs"><i class="fa-solid fa-trash ml-1"></i> حذف</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateStep(id, newStep) {
+            referrals = referrals.map(r => {
+                if(r.id === id) {
+                    r.step = newStep;
+                    if(newStep === 2) r.status = "في الطريق";
+                    if(newStep === 3) r.status = "مكتمل وتم الاستلام";
+                }
+                return r;
+            });
+            saveToStorage();
+            alert("تم تحديث مرحلة تتبع الحالة بنجاح!");
+        }
+
+        function deleteReferral(id) {
+            if(confirm("هل أنت متأكد من حذف هذه الحالة من سجلات النظام؟")) {
+                referrals = referrals.filter(r => r.id !== id);
+                saveToStorage();
+            }
+        }
+
+        window.onload = function() {
+            switchTab('home');
+            updateStats();
+            renderReceivingList();
+            renderTrackingList();
+        };
+    </script>
+</body>
+</html>
