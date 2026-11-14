@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتب صنعاء للإحالات الطبية | المنظومة المتكاملة</title>
+    <title>مكتب صنعاء للإحالات الطبية | المنظومة اللوجستية المتكاملة</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -22,17 +22,20 @@
                 </div>
                 <div>
                     <h1 class="text-lg md:text-xl font-black tracking-wide">مكتب صنعاء للإحالات الطبية</h1>
-                    <p class="text-[11px] text-slate-400">نظام إدارة التنسيق الميداني والإحالات الإسعافية والتخصصية</p>
+                    <p class="text-[11px] text-slate-400">منظومة التنسيق اللوجستي الإسعافي والتخصصي والمستلزمات</p>
                 </div>
             </div>
             
             <!-- Navigation Links -->
             <nav class="flex flex-wrap items-center justify-center gap-2 text-xs md:text-sm">
                 <button onclick="switchTab('home')" id="btn-home" class="nav-btn px-3.5 py-2 bg-blue-600 text-white rounded-lg transition font-bold shadow-sm">الرئيسية</button>
-                <button onclick="switchTab('new-referral')" id="btn-new-referral" class="nav-btn px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition font-semibold">إحالة مريض جديد</button>
+                <button onclick="switchTab('new-referral')" id="btn-new-referral" class="nav-btn px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition font-semibold">إحالة مريض</button>
+                <button onclick="openCoordinatorsModal()" class="px-3.5 py-2 bg-emerald-700 hover:bg-emerald-600 text-white rounded-lg transition font-bold"><i class="fa-solid fa-users-gear ml-1"></i> دليل المنسقين</button>
+                <button onclick="openSuppliesModal()" class="px-3.5 py-2 bg-blue-800 hover:bg-blue-700 text-white rounded-lg transition font-bold"><i class="fa-solid fa-box-medical ml-1"></i> المستلزمات الطبية</button>
+                <button onclick="openDoctorModal()" class="px-3.5 py-2 bg-purple-800 hover:bg-purple-700 text-white rounded-lg transition font-bold"><i class="fa-solid fa-user-doctor ml-1"></i> استدعاء طبيب</button>
                 <button onclick="switchTab('receiving-portal')" id="btn-receiving-portal" class="nav-btn px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition font-semibold">بوابة المستشفيات</button>
-                <button onclick="switchTab('tracking-portal')" id="btn-tracking-portal" class="nav-btn px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition font-semibold">تتبع الحالات</button>
-                <button onclick="checkAdminAccess()" class="nav-btn px-3.5 py-2 bg-amber-600 hover:bg-amber-500 text-slate-950 rounded-lg transition font-bold"><i class="fa-solid fa-lock ml-1"></i> لوحة الأدمن</button>
+                <button onclick="switchTab('tracking-portal')" id="btn-tracking-portal" class="nav-btn px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition font-semibold">التتبع</button>
+                <button onclick="checkAdminAccess()" class="nav-btn px-3.5 py-2 bg-amber-600 hover:bg-amber-500 text-slate-950 rounded-lg transition font-bold"><i class="fa-solid fa-lock ml-1"></i> الأدمن</button>
             </nav>
         </div>
     </header>
@@ -45,25 +48,25 @@
             <!-- Hero Banner -->
             <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white rounded-3xl p-6 md:p-10 shadow-xl border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="md:w-2/3 space-y-4 text-center md:text-right">
-                    <span class="bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs px-3.5 py-1 rounded-full font-bold">منظومة تنسيق معتمدة</span>
-                    <h2 class="text-2xl md:text-4xl font-black leading-tight">سرعة التنسيق.. أمان المريض.. دقة التحويل</h2>
+                    <span class="bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs px-3.5 py-1 rounded-full font-bold">المنظومة الطبية واللوجستية الأولى</span>
+                    <h2 class="text-2xl md:text-4xl font-black leading-tight">سرعة التنسيق.. أمان المريض.. دقة التجهيز الجراحي</h2>
                     <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
-                        نربط المستشفيات والمراكز الريفية في كافة المحافظات بشبكة واسعة من المستشفيات التخصصية، العيادات، ومراكز الأشعة في العاصمة صنعاء، مع نظام تتبّع لحظي ومحفوظات دقيقة.
+                        نربط المستشفيات والمراكز الريفية بكبرى المستشفيات والعيادات ومراكز الأشعة في صنعاء، مع توفير الدعامات، المفاصل الصناعية، والكوادر الطبية المتخصصة عبر شبكة تنسيق لحظية.
                     </p>
                     <div class="pt-2 flex flex-wrap gap-3 justify-center md:justify-start">
                         <button onclick="switchTab('new-referral')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg transition text-xs md:text-sm">
                             <i class="fa-solid fa-plus-circle ml-2"></i> إرسال حالة جديدة
                         </button>
-                        <button onclick="switchTab('receiving-portal')" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold px-6 py-3 rounded-xl transition text-xs md:text-sm">
-                            <i class="fa-solid fa-hospital ml-2"></i> استعراض المستشفيات المستقبلة
+                        <button onclick="openAddHospitalModal()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-xl transition text-xs md:text-sm">
+                            <i class="fa-solid fa-hospital ml-2"></i> انضمام مشفى/عيادة للشبكة
                         </button>
                     </div>
                 </div>
                 <div class="md:w-1/3 flex justify-center w-full">
                     <div class="bg-slate-800/90 p-6 rounded-2xl backdrop-blur-md border border-slate-700 text-center shadow-inner w-full max-w-xs">
-                        <i class="fa-solid fa-ambulance text-4xl text-amber-400 mb-2 animate-pulse"></i>
-                        <h3 class="font-bold text-white text-sm">خط ساخن للطوارئ</h3>
-                        <p class="text-[11px] text-slate-400 mt-0.5">تنسيق النقل والإسعاف 24 ساعة</p>
+                        <i class="fa-solid fa-headset text-4xl text-amber-400 mb-2 animate-pulse"></i>
+                        <h3 class="font-bold text-white text-sm">الخط الساخن للعمليات</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">تنسيق الإحالات والمستلزمات 24 ساعة</p>
                         <p class="text-lg font-black text-amber-300 mt-2 tracking-wider" dir="ltr">700090113</p>
                     </div>
                 </div>
@@ -74,60 +77,50 @@
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-500 transition group flex flex-col justify-between">
                     <div>
                         <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold group-hover:bg-blue-600 group-hover:text-white transition">
-                            <i class="fa-solid fa-file-medical-alt"></i>
+                            <i class="fa-solid fa-box-medical"></i>
                         </div>
-                        <h3 class="font-bold text-base mb-2 text-slate-900">إحالة مريض جديد</h3>
+                        <h3 class="font-bold text-base mb-2 text-slate-900">توفير الدعامات والمفاصل</h3>
                         <p class="text-xs text-slate-600 leading-relaxed">
-                            بوابة مخصصة للمستشفيات الريفية والمراكز الصحية لإدخال بيانات المريض، التشخيص، ودرجة الوعي GCS وتحديد المستشفى المستقبل.
+                            تنسيق سريع مع كبرى الموردين لتوفير المستلزمات الجراحية الدقيقة (دعامات قلبية، مفاصل صناعية، مسامير نخاعية) وتوصيلها للمستشفى.
                         </p>
                     </div>
-                    <button onclick="switchTab('new-referral')" class="mt-4 text-blue-600 hover:text-blue-800 text-xs font-bold flex items-center gap-1">
-                        ابدأ الإحالة الآن <i class="fa-solid fa-arrow-left"></i>
+                    <button onclick="openSuppliesModal()" class="mt-4 text-blue-600 hover:text-blue-800 text-xs font-bold flex items-center gap-1">
+                        اطلب مستلزمات جراحية <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-500 transition group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold group-hover:bg-purple-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <h3 class="font-bold text-base mb-2 text-slate-900">استدعاء أطباء استشاريين</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            طلب استدعاء أطباء وجراحين أخصائيين لمعاينة وإجراء العمليات الدقيقة للمريض في المستشفى التخصصي الذي يختاره.
+                        </p>
+                    </div>
+                    <button onclick="openDoctorModal()" class="mt-4 text-purple-600 hover:text-purple-800 text-xs font-bold flex items-center gap-1">
+                        اطلب طبيب معتمد <i class="fa-solid fa-arrow-left"></i>
                     </button>
                 </div>
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-500 transition group flex flex-col justify-between">
                     <div>
                         <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold group-hover:bg-emerald-600 group-hover:text-white transition">
-                            <i class="fa-solid fa-hospital-user"></i>
+                            <i class="fa-solid fa-users-gear"></i>
                         </div>
-                        <h3 class="font-bold text-base mb-2 text-slate-900">بوابة المستشفيات والمراكز</h3>
+                        <h3 class="font-bold text-base mb-2 text-slate-900">دليل المنسقين والشبكة</h3>
                         <p class="text-xs text-slate-600 leading-relaxed">
-                            خاصة بالمستشفيات التخصصية، العيادات، ومركز صنعاء للأشعة لمراجعة الحالات الواردة، وتأكيد توفر الأسرّة واستلام المريض.
+                            قائمة تفاعلية تضم أسماء وأرقام منسقي المكتب في المحافظات والمستشفيات، بالإضافة لإمكانية إضافة مستشفيات جديدة للشبكة.
                         </p>
                     </div>
-                    <button onclick="switchTab('receiving-portal')" class="mt-4 text-emerald-600 hover:text-emerald-800 text-xs font-bold flex items-center gap-1">
-                        استعراض الشبكة <i class="fa-solid fa-arrow-left"></i>
+                    <button onclick="openCoordinatorsModal()" class="mt-4 text-emerald-600 hover:text-emerald-800 text-xs font-bold flex items-center gap-1">
+                        عرض دليل المنسقين <i class="fa-solid fa-arrow-left"></i>
                     </button>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-500 transition group flex flex-col justify-between">
-                    <div>
-                        <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold group-hover:bg-amber-600 group-hover:text-white transition">
-                            <i class="fa-solid fa-route"></i>
-                        </div>
-                        <h3 class="font-bold text-base mb-2 text-slate-900">تتبع لحظي للإحالات</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            نظام تتبّع بصري بثلاث مراحل (تم التحويل ➔ المريض في الطريق ➔ وصل وتأكيد الاستلام) لضمان الشفافية والمتابعة.
-                        </p>
-                    </div>
-                    <button onclick="switchTab('tracking-portal')" class="mt-4 text-amber-600 hover:text-amber-800 text-xs font-bold flex items-center gap-1">
-                        تتبع حالة مريض <i class="fa-solid fa-arrow-left"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Additional Services Highlight -->
-            <div class="bg-emerald-900 text-white p-6 rounded-2xl shadow-md border border-emerald-800 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="space-y-1 text-center md:text-right">
-                    <span class="bg-emerald-500/30 text-emerald-200 text-[11px] px-3 py-0.5 rounded-full font-bold">خدمات استراتيجية إضافية</span>
-                    <h3 class="text-base md:text-lg font-bold mt-1">تزويد المستشفيات الريفية والمحافظات بالكوادر الطبية الماهرة</h3>
-                    <p class="text-emerald-100 text-xs">نوفر كوادر تمريضية وطبية تخصصية ذات كفاءة وخبرة عالية لدعم المنشآت الطبية في المديريات والمحافظات.</p>
-                </div>
-                <button onclick="switchTab('new-referral')" class="bg-white hover:bg-emerald-50 text-emerald-950 font-bold px-5 py-2.5 rounded-xl shadow transition text-xs whitespace-nowrap">طلب توريد كادر</button>
             </div>
 
             <!-- Public Summary Stats -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="font-bold text-base mb-4 text-slate-800 border-b pb-2"><i class="fa-solid fa-chart-pie ml-2 text-blue-600"></i>ملخص حركة الإحالات النشطة في النظام</h3>
+                <h3 class="font-bold text-base mb-4 text-slate-800 border-b pb-2"><i class="fa-solid fa-chart-pie ml-2 text-blue-600"></i>ملخص حركة الإحالات والتنسيق الطبي النشط</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <p class="text-xs text-slate-500">إجمالي الإحالات</p>
@@ -301,13 +294,151 @@
 
     </main>
 
+    <!-- MODAL 1: COORDINATORS LIST -->
+    <div id="coordinatorsModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl rounded-2xl p-6 shadow-2xl space-y-4 relative">
+            <button onclick="closeCoordinatorsModal()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700 font-bold text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <div class="border-b pb-3">
+                <h3 class="text-lg font-black text-slate-900"><i class="fa-solid fa-users ml-2 text-emerald-600"></i>دليل المنسقين والمنشآت الطبية</h3>
+                <p class="text-xs text-slate-500">أرقام وأسماء منسقي الإحالات من وإلى المكتب في العاصمة والمحافظات</p>
+            </div>
+            <div class="space-y-3 max-h-96 overflow-y-auto">
+                <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
+                    <div>
+                        <p class="font-bold text-slate-900">د. محمد الحكيمي (منسق عام المحاور الريفية)</p>
+                        <p class="text-slate-500">المسؤول عن إحالات حجة، المحويت، وعمران</p>
+                    </div>
+                    <span class="font-black text-amber-600" dir="ltr">777767903</span>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
+                    <div>
+                        <p class="font-bold text-slate-900">أحمد الوادعي (منسق استقبال طوارئ صنعاء)</p>
+                        <p class="text-slate-500">متابعة الأسرّة والمستشفيات التخصصية بالعاصمة</p>
+                    </div>
+                    <span class="font-black text-amber-600" dir="ltr">712220425</span>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
+                    <div>
+                        <p class="font-bold text-slate-900">الخط الساخن للمكتب (24 ساعة)</p>
+                        <p class="text-slate-500">متاح لجميع الأطباء والمستشفيات</p>
+                    </div>
+                    <span class="font-black text-emerald-600 text-sm" dir="ltr">700090113</span>
+                </div>
+            </div>
+            <button onclick="openAddHospitalModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold p-3 rounded-xl text-xs transition">
+                <i class="fa-solid fa-hospital ml-1"></i> طلب إضافة مستشفى أو عيادة جديدة للشبكة
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 2: MEDICAL SUPPLIES (Stents, Joints, etc.) -->
+    <div id="suppliesModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-xl rounded-2xl p-6 shadow-2xl space-y-4 relative">
+            <button onclick="closeSuppliesModal()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700 font-bold text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <div class="border-b pb-3">
+                <h3 class="text-lg font-black text-slate-900"><i class="fa-solid fa-box-medical ml-2 text-blue-600"></i>تنسيق توفير المستلزمات الطبية الجراحية</h3>
+                <p class="text-xs text-slate-500">طلب دعامات قلبية، مفاصل صناعية، مسامير نخاعية، وتجهيزات دقيقة عبر الموردين</p>
+            </div>
+            <form onsubmit="submitSupplyRequest(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اسم المريض والمستشفى المستقبل *</label>
+                    <input type="text" id="supPatient" required placeholder="اسم المريض والمستشفى أو الغرفة" class="w-full p-2.5 bg-slate-50 border rounded-xl">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">نوع المستلزم المطلوب (دعامات، مفصل، مسامير...) *</label>
+                    <select id="supType" class="w-full p-2.5 bg-slate-50 border rounded-xl">
+                        <option value="دعامات قلبية (Stents)">دعامات قلبية (Stents)</option>
+                        <option value="مفاصل صناعية (Joint Replacement)">مفاصل صناعية (ركبة/حوض)</option>
+                        <option value="مسامير وشرائح جراحية (Orthopedic Hardware)">مسامير وشرائح جراحية عظمية</option>
+                        <option value="مستهلكات عمليات جراحية دقيقة">مستهلكات جراحية وتداخلية أخرى</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">تفاصيل القياسات والوصف الطبي *</label>
+                    <textarea id="supDetails" rows="2" placeholder="المقاسات المطلوبة، الماركة المفضلة، ووقت إجراء العمليات..." required class="w-full p-2.5 bg-slate-50 border rounded-xl"></textarea>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">رقم هاتف الطبيب أو المسؤول المعالج *</label>
+                    <input type="text" id="supPhone" required placeholder="رقم الجوال للتواصل السريع" class="w-full p-2.5 bg-slate-50 border rounded-xl" dir="ltr">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-3 rounded-xl transition">
+                    إرسال طلب التوريد والتنسيق الفوري
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 3: DOCTOR CALL REQUEST -->
+    <div id="doctorModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-xl rounded-2xl p-6 shadow-2xl space-y-4 relative">
+            <button onclick="closeDoctorModal()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700 font-bold text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <div class="border-b pb-3">
+                <h3 class="text-lg font-black text-slate-900"><i class="fa-solid fa-user-doctor ml-2 text-purple-600"></i>استدعاء طبيب أخصائي / استشاري</h3>
+                <p class="text-xs text-slate-500">طلب حضور طبيب أو جراح معتمد لإجراء عملية دقيقة في المستشفى المحدد</p>
+            </div>
+            <form onsubmit="submitDoctorRequest(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">التخصص المطلوب *</label>
+                    <input type="text" id="docSpecialty" required placeholder="مثال: جراحة مخ وأعصاب / قسطرة قلبية / جراحة عظام معقدة" class="w-full p-2.5 bg-slate-50 border rounded-xl">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اسم المستشفى و الغرفة/العناية *</label>
+                    <input type="text" id="docHospital" required placeholder="المستشفى في صنعاء" class="w-full p-2.5 bg-slate-50 border rounded-xl">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">موعد العملية أو المعاينة العاجلة *</label>
+                    <input type="text" id="docTime" required placeholder="التوقيت المقدر" class="w-full p-2.5 bg-slate-50 border rounded-xl">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">رقم المسؤول عن الحالة *</label>
+                    <input type="text" id="docPhone" required placeholder="رقم الجوال" class="w-full p-2.5 bg-slate-50 border rounded-xl" dir="ltr">
+                </div>
+                <button type="submit" class="w-full bg-purple-700 hover:bg-purple-600 text-white font-bold p-3 rounded-xl transition">
+                    تأكيد طلب استدعاء الطبيب
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 4: ADD HOSPITAL TO NETWORK -->
+    <div id="addHospitalModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-xl rounded-2xl p-6 shadow-2xl space-y-4 relative">
+            <button onclick="closeAddHospitalModal()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700 font-bold text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <div class="border-b pb-3">
+                <h3 class="text-lg font-black text-slate-900"><i class="fa-solid fa-hospital ml-2 text-blue-600"></i>إضافة مشفى أو عيادة لشبكة الشركاء</h3>
+                <p class="text-xs text-slate-500">تسجيل مركز طبي، عيادة تخصصية، أو مركز أشعة ليكون ضمن الشبكة المستقبلة</p>
+            </div>
+            <form onsubmit="submitAddHospital(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اسم المنشأة الطبية *</label>
+                    <input type="text" id="newHospName" required placeholder="اسم المستشفى أو المركز أو العيادة" class="w-full p-2.5 bg-slate-50 border rounded-xl">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">المنطقة / العنوان في صنعاء أو المحافظات *</label>
+                    <input type="text" id="newHospAddress" required placeholder="الشارع، المديرية" class="w-full p-2.5 bg-slate-50 border rounded-xl">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">التخصصات والخدمات المقدمة *</label>
+                    <input type="text" id="newHospServices" required placeholder="طوارئ، أشعة مقطعية، عمليات كبرى..." class="w-full p-2.5 bg-slate-50 border rounded-xl">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">رقم مسؤول الإدارة أو الاستقبال *</label>
+                    <input type="text" id="newHospPhone" required placeholder="رقم الجوال" class="w-full p-2.5 bg-slate-50 border rounded-xl" dir="ltr">
+                </div>
+                <button type="submit" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold p-3 rounded-xl transition">
+                    تسجيل وإضافة المنشأة للشبكة الطبية
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 mt-12 border-t border-slate-800 text-xs">
         <div class="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
                 <h4 class="font-bold text-white text-sm mb-3">مكتب صنعاء للإحالات الطبية</h4>
                 <p class="leading-relaxed text-slate-400">
-                    منظومة التنسيق الإسعافي والتخصصي من الريف إلى العاصمة. نضمن سرعة التحويل، أمان المريض، وجودة الاعتماد بالشراكة مع نخبة المستشفيات والعيادات.
+                    منظومة التنسيق الإسعافي والتخصصي وتوفير المستلزمات والكوادر. نضمن سرعة التحويل، أمان المريض، وجودة الاعتماد.
                 </p>
             </div>
             <div>
@@ -319,11 +450,11 @@
             <div>
                 <h4 class="font-bold text-white text-sm mb-3">الدعم السريع والطوارئ</h4>
                 <p class="text-amber-300 font-black text-base mb-2" dir="ltr">700090113</p>
-                <p class="text-emerald-400 font-semibold"><i class="fa-solid fa-shield-halved ml-1"></i> نظام تنسيق وإحالات آمن ومشفر</p>
+                <p class="text-emerald-400 font-semibold"><i class="fa-solid fa-shield-halved ml-1"></i> شبكة تنسيق طبية آمنة ومشفرة</p>
             </div>
         </div>
         <div class="bg-slate-950 text-center py-4 text-slate-500 border-t border-slate-800/50">
-            جميع الحقوق المحفوظة © 2026 - منظومة مكتب صنعاء للإحالات الطبية والتنسيق الميداني.
+            جميع الحقوق المحفوظة © 2026 - منظومة مكتب صنعاء للإحالات الطبية والتنسيق اللوجستي.
         </div>
     </footer>
 
@@ -343,20 +474,6 @@
                 companion: "صالح أحمد (770797023)",
                 status: "قيد المراجعة",
                 step: 1
-            },
-            {
-                id: 2,
-                patientName: "فاطمة محمد علي",
-                age: 32,
-                gender: "أنثى",
-                referringHospital: "المركز الصحي بمديرية بني مطر",
-                targetHospital: "مستشفى الثورة العام",
-                diagnosis: "نزيف داخلي إثر حادث مروري وتكسير بالحوض",
-                condition: "استقرار نسبي بالعلامات الحيوية، GCS 13/15، بحاجة ماسة لعناية جراحية.",
-                referrer: "ممرض/ أحمد الوادعي (712220425)",
-                companion: "علي محمد (711122334)",
-                status: "في الطريق",
-                step: 2
             }
         ];
 
@@ -385,8 +502,41 @@
                 activeBtn.classList.remove('bg-slate-800', 'text-slate-200');
                 activeBtn.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
             }
-
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Modals Control Functions
+        function openCoordinatorsModal() { document.getElementById('coordinatorsModal').classList.remove('hidden'); }
+        function closeCoordinatorsModal() { document.getElementById('coordinatorsModal').classList.add('hidden'); }
+
+        function openSuppliesModal() { document.getElementById('suppliesModal').classList.remove('hidden'); }
+        function closeSuppliesModal() { document.getElementById('suppliesModal').classList.add('hidden'); }
+
+        function openDoctorModal() { document.getElementById('doctorModal').classList.remove('hidden'); }
+        function closeDoctorModal() { document.getElementById('doctorModal').classList.add('hidden'); }
+
+        function openAddHospitalModal() { 
+            closeCoordinatorsModal();
+            document.getElementById('addHospitalModal').classList.remove('hidden'); 
+        }
+        function closeAddHospitalModal() { document.getElementById('addHospitalModal').classList.add('hidden'); }
+
+        function submitSupplyRequest(e) {
+            e.preventDefault();
+            alert("تم إرسال طلب المستلزمات الطبية بنجاح إلى غرفة التنسيق والموردين!");
+            closeSuppliesModal();
+        }
+
+        function submitDoctorRequest(e) {
+            e.preventDefault();
+            alert("تم إرسال طلب استدعاء الطبيب بنجاح وسيتم التواصل مع المستشفى فوراً!");
+            closeDoctorModal();
+        }
+
+        function submitAddHospital(e) {
+            e.preventDefault();
+            alert("تم إرسال طلب انضمام المنشأة الطبية بنجاح بانتظار اعتماد الأدمن!");
+            closeAddHospitalModal();
         }
 
         function checkAdminAccess() {
@@ -485,7 +635,6 @@
                         <div class="flex items-center justify-between relative max-w-lg mx-auto">
                             <div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-slate-200 z-0"></div>
                             
-                            <!-- Point 1 -->
                             <div class="relative z-10 flex flex-col items-center">
                                 <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${r.step >= 1 ? 'bg-slate-900 text-white shadow-md' : 'bg-slate-200 text-slate-500'}">
                                     <i class="fa-solid fa-file-waveform"></i>
@@ -493,7 +642,6 @@
                                 <span class="text-[11px] font-bold mt-2 ${r.step >= 1 ? 'text-slate-900' : 'text-slate-400'}">1. تم التحويل</span>
                             </div>
 
-                            <!-- Point 2 -->
                             <div class="relative z-10 flex flex-col items-center">
                                 <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${r.step >= 2 ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-200 text-slate-500'}">
                                     <i class="fa-solid fa-ambulance"></i>
@@ -501,7 +649,6 @@
                                 <span class="text-[11px] font-bold mt-2 ${r.step >= 2 ? 'text-blue-600' : 'text-slate-400'}">2. المريض في الطريق</span>
                             </div>
 
-                            <!-- Point 3 -->
                             <div class="relative z-10 flex flex-col items-center">
                                 <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${r.step >= 3 ? 'bg-emerald-600 text-white shadow-md' : 'bg-slate-200 text-slate-500'}">
                                     <i class="fa-solid fa-circle-check"></i>
